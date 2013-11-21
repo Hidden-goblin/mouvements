@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" fontSize="18" color="#000000" backgroundColor="#FFFFFF" currentState="menu">
+	<mx:states>
+		<mx:State name="menu">
+			<mx:AddChild position="lastChild">
+				<mx:Text x="333.5" y="10" text="Mouvements&#xa;Menu" fontSize="24" textAlign="center" id="text1"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="720" y="14" label="Menu" click="{currentState='menu'}"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="283" y="205" label="Translation et référentiel" id="button1" click="transition('translation')"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="283" y="245" label="Mouvement de translation circulaire" id="button2" click="transition('circulaire')"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="283" y="285" label="Mouvement circulaire" id="button3" click="transition('rotation')"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="283" y="325" label="Rotation et référentiel" id="button4" click="transition('rotationref')"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Text x="10" y="600" text="Conception et réalisation : E. Aïvayan." fontSize="10" textAlign="center" id="copy"/>
+			</mx:AddChild>	
+		</mx:State>
+		
+		<mx:State name="rotation" basedOn="menu">
+			<mx:SetProperty target="{text1}" name="text" value="Mouvement &#xa;de&#xa;Rotation"/>
+			<mx:SetProperty target="{text1}" name="x" value="340"/>
+			<mx:RemoveChild target="{button1}"/>
+			<mx:RemoveChild target="{button2}"/>
+			<mx:RemoveChild target="{button3}"/>
+			<mx:RemoveChild target="{button4}"/>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas x="34" y="131" width="400" height="400" borderStyle="solid" borderColor="#020202" borderThickness="2">
+				<mx:Image id="imageRotation"/>
+				
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas x="442" y="131" width="200" height="400">
+					<mx:Button x="10" y="10" label="lancer" click="manege.depart(duree,'circulaire')"/>
+					<mx:Button x="10" y="50" label="pause" id="boutonPauseRotation" click="pauseRotation()"/>
+					<mx:Button x="10" y="90" label="arrêter" click="manege.stop('circulaire')"/>
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="560" y="54" label="Translation circulaire" click="transition('circulaire')"/>
+			</mx:AddChild>
+		</mx:State>
+		
+		<mx:State name="rotationReferentiel" basedOn="menu">
+			<mx:SetProperty target="{text1}" name="text" value="Rotation et Référentiels"/>
+			<mx:SetProperty target="{text1}" name="x" value="270"/>
+			<mx:RemoveChild target="{button1}"/>
+			<mx:RemoveChild target="{button2}"/>
+			<mx:RemoveChild target="{button3}"/>
+			<mx:RemoveChild target="{button4}"/>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas x="34" y="131" width="400" height="400" borderStyle="solid" borderColor="#020202" borderThickness="2">
+				<mx:Image id="imageReferentiel"/>
+				
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas x="442" y="131" width="200" height="400">
+					<mx:Button x="10" y="10" label="lancer" click="manege.depart(duree,'referentiel')"/>
+					<mx:Button x="10" y="50" label="pause" id="boutonPauseReferentiel" click="pauseReferentiel()"/>
+					<mx:Button x="10" y="90" label="arrêter" click="manege.stop('referentiel')"/>
+					<mx:RadioButtonGroup id="referentielMouvementCirculaire" itemClick="choixReferentielCirculaire(event)"/>
+						<mx:RadioButton label=" le sol" groupName="referentielMouvementCirculaire" value="sol" selected="true" height="32" width="165" x="10" y="273"/>
+						<mx:RadioButton x="10" y="302" label=" le manege" groupName="referentielMouvementCirculaire"  value="disque" width="165" height="37"/>
+						<mx:Text x="10" y="209" text="Mouvement vu depuis" width="180" height="56"/>
+			
+				</mx:Canvas>
+			</mx:AddChild>
+			       <mx:AddChild position="lastChild"> 
+				<mx:Button x="560" y="54" label="Translation circulaire" click="transition('circulaire')"/>
+			</mx:AddChild> 
+		</mx:State>
+		
+		<mx:State name="translationReferentiel" basedOn="menu">
+			<mx:SetProperty target="{text1}" name="text" value="Translation et Référentiels"/>
+			<mx:SetProperty target="{text1}" name="x" value="254"/>
+			<mx:RemoveChild target="{button1}"/>
+			<mx:RemoveChild target="{button2}"/>
+			<mx:RemoveChild target="{button3}"/>
+			<mx:RemoveChild target="{button4}"/>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas width="800" height="250" horizontalScrollPolicy="off" id="canvas1" x="1" y="53">
+					<mx:Image source="{train}"  id="leTrain"/>
+					<mx:Image source="{maBille}" id="laBalle"  y="23"/>
+					<mx:Image source="{personnage1}"  y="15" id="lePersonnageTrainGauche"/>
+					<mx:Image source="{personnage3}"  y="15" id="lePersonnageTrainDroit"/>
+					<mx:HRule x="0" y="81" width="100%" strokeColor="#000000"/>
+					<mx:Image source="{scooter}" id="leScooter"  y="90" />
+					<mx:Image source="{personnage2}" id="lePersonnageSol"  y="150"/>
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">	
+				<mx:Text text="Train" width="79" height="28" x="10" y="345" fontSize="18" id="vitesseTrain"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">	
+				<mx:Text id="messageVitesseTrain" text="" x="90" y="345" width="260"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">	
+				<mx:Text text="Scooter" x="10" y="395"  fontSize="18" width="79" height="31" id="text2"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">	
+				<mx:Text text="" x="90" y="395" width="260" id="messageVitesseScooter"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">	
+				<mx:Text text="Balle" x="10" y="438" fontSize="18" width="79" height="27" id="text3"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">	
+				<mx:Text text="" x="90" y="438" width="260" id="messageVitesseBalle"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">
+				<mx:Text x="548" y="308" text="Mouvement dans&#xa; le référentiel du" width="174"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">	
+				<mx:Button x="603" y="366" label="Sol" click="translation('Sol')" id="boutonRefSol"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">	
+				<mx:Button x="603" y="406" label="Scooter" click="translation('Scooter')" id="boutonRefScooter"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">	
+				<mx:Button x="603" y="446" label="Train" click="translation('Train')" id="boutonRefTrain"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">	
+				<mx:Button x="293" y="495" label="Réinitialiser tout" id="reInitAll" click="reinitall()"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">
+				<mx:HSlider x="321" y="318" liveDragging="false" minimum="0" maximum="100"  allowTrackClick="true" id="sliderVitesseTrain" change="sliderTrain(event)" snapInterval="1" tickInterval="25" labels="[0,25,50,75,100]" borderColor="#000000" width="192"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">
+				<mx:HSlider x="321" y="372" liveDragging="false" minimum="0" maximum="60"  allowTrackClick="true" id="sliderVitesseScooter" change="sliderScooter(event)" snapInterval="1" tickInterval="20" borderColor="#010101" labels="[0,20,40,60]" width="192" height="40"/>
+			</mx:AddChild>	
+			<mx:AddChild position="lastChild">
+				<mx:HSlider x="321" y="420" liveDragging="false" minimum="0" maximum="100" allowTrackClick="true" id="sliderVitesseBalle" change="sliderBalle(event)" snapInterval="1" borderColor="#010101" tickInterval="25" labels="[0,25,50,75,100]" width="192"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="521" y="495" label="Réinitialiser les positions" id="reInit" click="reinit()"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Text x="10" y="302" text="Vitesse" fontSize="24"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:VRule x="521" y="318" width="3" height="155" strokeColor="#000303"/>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="translationCirculaire" basedOn="menu">
+			<mx:SetProperty target="{text1}" name="text" value="Mouvements &#xa;de&#xa; translation circulaire"/>
+			<mx:SetProperty target="{text1}" name="x" value="285"/>
+			<mx:RemoveChild target="{button1}"/>
+			<mx:RemoveChild target="{button2}"/>
+			<mx:RemoveChild target="{button3}"/>
+			<mx:RemoveChild target="{button4}"/>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas x="34" y="131" width="400" height="400" borderStyle="solid" borderColor="#020202" borderThickness="2">
+					<mx:Image id="imageTranslationCirculaire"/>
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas x="442" y="131" width="200" height="400">
+					<mx:Button x="10" y="10" label="lancer" click="manege.depart(duree,'translation')"/>
+					<mx:Button x="10" y="90" label="arrêter" click="manege.stop('translation')"/>
+					<mx:Button x="10" y="50" label="pause" id="boutonPauseTranslation" click="pauseTranslation()"/>
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="690" y="54" label="Rotation" click="transition('rotation')"/>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import assets.*;
+			import mx.events.SliderEvent;
+			import mx.effects.Tween;
+            import mx.controls.sliderClasses.Slider;
+            import mx.events.ItemClickEvent;
+	
+		]]>
+	</mx:Script>
+	<mx:Script source="assets/initialisation.as" />
+	<mx:Script source="assets/donneesGlissieres.as" />
+	<mx:Script source="assets/reinitialisation.as" />
+	<mx:Script source="assets/translation.as"/>
+	<mx:Script source="assets/changementEtat.as"/>
+	<mx:Script source="assets/controles.as"/>
+</mx:Application>
